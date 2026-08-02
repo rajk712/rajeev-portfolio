@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Market — Rajeev Kumar</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="market.css" />
+</head>
+<body class="market-page">
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">RK<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="market.html" class="nav-active">📊 Market</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MARKET STATUS BAR -->
+  <div class="mkt-status-bar" id="mkt-status-bar">
+    <div class="mkt-status-left">
+      <span class="mkt-flag">🇮🇳</span>
+      <span class="mkt-title">Indian Share Market</span>
+      <span class="mkt-divider">|</span>
+      <span class="mkt-exchange">NSE &amp; BSE</span>
+    </div>
+    <div class="mkt-status-right">
+      <span class="mkt-dot" id="mkt-dot"></span>
+      <span class="mkt-status-text" id="mkt-status-text">Checking…</span>
+      <span class="mkt-divider">|</span>
+      <span class="mkt-ist-label">IST</span>
+      <span class="mkt-clock" id="mkt-clock">--:--:--</span>
+    </div>
+  </div>
+
+  <!-- LIVE TICKER TAPE (TradingView) -->
+  <div class="tv-ticker-wrap">
+    <div class="tradingview-widget-container" style="height:46px">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          {"proName": "NSE:NIFTY",      "title": "NIFTY 50"},
+          {"proName": "BSE:SENSEX",     "title": "SENSEX"},
+          {"proName": "NSE:CNXIT",      "title": "NIFTY IT"},
+          {"proName": "NSE:BANKNIFTY",  "title": "BANK NIFTY"},
+          {"proName": "NSE:NIFTYJR",    "title": "NIFTY NEXT 50"},
+          {"proName": "NSE:NIFMDCP100", "title": "MIDCAP 100"},
+          {"proName": "NSE:NIFTYDEFTY", "title": "NIFTY DEFTY"},
+          {"proName": "NSE:NIFINFRA",   "title": "NIFTY INFRA"},
+          {"proName": "NSE:NIFPHARMA",  "title": "NIFTY PHARMA"},
+          {"proName": "NSE:NIFAUTO",    "title": "NIFTY AUTO"},
+          {"proName": "NSE:NIFMETAL",   "title": "NIFTY METAL"},
+          {"proName": "NSE:NIFENERGY",  "title": "NIFTY ENERGY"}
+        ],
+        "showSymbolLogo": false,
+        "isTransparent": true,
+        "displayMode": "adaptive",
+        "colorTheme": "dark",
+        "locale": "en"
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="mkt-hero">
+    <div class="hero-bg">
+      <div class="blob blob1" style="opacity:0.08"></div>
+      <div class="blob blob2" style="opacity:0.08"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="mkt-hero-inner">
+      <span class="section-tag">Real-Time Data</span>
+      <h1 class="mkt-hero-title">Live Market <span class="gradient-text">Indexes</span></h1>
+      <p class="mkt-hero-sub">NSE &amp; BSE live data · Powered by TradingView</p>
+    </div>
+  </div>
+
+  <!-- KEY INDICES GRID -->
+  <section class="mkt-section">
+    <div class="mkt-container">
+      <div class="mkt-section-hdr">
+        <span class="mkt-section-tag">Key Indices</span>
+        <h2 class="mkt-section-title">Major Market Benchmarks</h2>
+      </div>
+      <div class="indices-grid">
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">NIFTY 50 <span class="index-exch">NSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"NSE:NIFTY","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">SENSEX <span class="index-exch">BSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"BSE:SENSEX","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">BANK NIFTY <span class="index-exch">NSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"NSE:BANKNIFTY","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">NIFTY IT <span class="index-exch">NSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"NSE:CNXIT","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">NIFTY NEXT 50 <span class="index-exch">NSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"NSE:NIFTYJR","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+        <div class="index-widget-card">
+          <div class="index-widget-label">MIDCAP 100 <span class="index-exch">NSE</span></div>
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+            {"symbol":"NSE:NIFMDCP100","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}
+            </script>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKET MOVERS (Top Gainers / Losers tabs) -->
+  <section class="mkt-section mkt-section-dark">
+    <div class="mkt-container">
+      <div class="mkt-section-hdr">
+        <span class="mkt-section-tag">Market Movers</span>
+        <h2 class="mkt-section-title">Top Gainers &amp; Losers</h2>
+      </div>
+      <div class="movers-tabs-wrap">
+        <div class="movers-tabs">
+          <button class="movers-tab active" data-tab="gainers">▲ Top Gainers</button>
+          <button class="movers-tab" data-tab="losers">▼ Top Losers</button>
+        </div>
+        <div id="movers-gainers" class="movers-panel active">
+          <div class="tradingview-widget-container" style="height:500px">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+            {
+              "width": "100%",
+              "height": 500,
+              "defaultColumn": "overview",
+              "defaultScreen": "top_gainers",
+              "market": "india",
+              "showToolbar": true,
+              "colorTheme": "dark",
+              "locale": "en",
+              "isTransparent": true
+            }
+            </script>
+          </div>
+        </div>
+        <div id="movers-losers" class="movers-panel">
+          <div class="tradingview-widget-container" style="height:500px">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+            {
+              "width": "100%",
+              "height": 500,
+              "defaultColumn": "overview",
+              "defaultScreen": "top_losers",
+              "market": "india",
+              "showToolbar": true,
+              "colorTheme": "dark",
+              "locale": "en",
+              "isTransparent": true
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKET OVERVIEW CHART -->
+  <section class="mkt-section">
+    <div class="mkt-container">
+      <div class="mkt-section-hdr">
+        <span class="mkt-section-tag">Chart View</span>
+        <h2 class="mkt-section-title">Market Overview</h2>
+      </div>
+      <div class="tv-overview-wrap glass-card">
+        <div class="tradingview-widget-container" style="height:580px">
+          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+          {
+            "colorTheme": "dark",
+            "dateRange": "1D",
+            "showChart": true,
+            "locale": "en",
+            "width": "100%",
+            "height": 580,
+            "isTransparent": true,
+            "showSymbolLogo": true,
+            "showFloatingTooltip": false,
+            "plotLineColorGrowing": "rgba(0, 229, 176, 1)",
+            "plotLineColorFalling": "rgba(255, 95, 126, 1)",
+            "gridLineColor": "rgba(255,255,255,0.04)",
+            "scaleFontColor": "rgba(136, 149, 179, 1)",
+            "belowLineFillColorGrowing": "rgba(0, 229, 176, 0.1)",
+            "belowLineFillColorFalling": "rgba(255, 95, 126, 0.1)",
+            "belowLineFillColorGrowingBottom": "rgba(0, 229, 176, 0)",
+            "belowLineFillColorFallingBottom": "rgba(255, 95, 126, 0)",
+            "symbolActiveColor": "rgba(0, 161, 224, 0.12)",
+            "tabs": [
+              {
+                "title": "NSE Indices",
+                "symbols": [
+                  {"s": "NSE:NIFTY",      "d": "NIFTY 50"},
+                  {"s": "BSE:SENSEX",     "d": "SENSEX"},
+                  {"s": "NSE:BANKNIFTY",  "d": "BANK NIFTY"},
+                  {"s": "NSE:CNXIT",      "d": "NIFTY IT"},
+                  {"s": "NSE:NIFTYJR",    "d": "NIFTY NEXT 50"},
+                  {"s": "NSE:NIFMDCP100", "d": "MIDCAP 100"}
+                ],
+                "originalTitle": "NSE Indices"
+              },
+              {
+                "title": "Sectors",
+                "symbols": [
+                  {"s": "NSE:NIFPHARMA",  "d": "Pharma"},
+                  {"s": "NSE:NIFAUTO",    "d": "Auto"},
+                  {"s": "NSE:NIFMETAL",   "d": "Metal"},
+                  {"s": "NSE:NIFENERGY",  "d": "Energy"},
+                  {"s": "NSE:NIFINFRA",   "d": "Infra"},
+                  {"s": "NSE:NIFFMCG",    "d": "FMCG"}
+                ],
+                "originalTitle": "Sectors"
+              }
+            ]
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STOCK SEARCH -->
+  <section class="mkt-section mkt-section-dark">
+    <div class="mkt-container">
+      <div class="mkt-section-hdr">
+        <span class="mkt-section-tag">Stock Lookup</span>
+        <h2 class="mkt-section-title">Search Any Stock</h2>
+        <p class="mkt-section-sub">Type a stock name or ticker to open its live chart on TradingView</p>
+      </div>
+      <div class="stock-search-wrap">
+        <div class="stock-search-bar">
+          <span class="stock-search-icon">🔍</span>
+          <input
+            type="text"
+            id="stock-input"
+            class="stock-input"
+            placeholder="e.g. RELIANCE, TCS, INFY, HDFCBANK…"
+            autocomplete="off"
+          />
+          <button class="btn btn-primary stock-search-btn" id="stock-search-btn">
+            View Chart
+          </button>
+        </div>
+        <div class="stock-suggestions">
+          <span class="stock-chip" data-sym="NSE:RELIANCE">RELIANCE</span>
+          <span class="stock-chip" data-sym="NSE:TCS">TCS</span>
+          <span class="stock-chip" data-sym="NSE:INFY">INFOSYS</span>
+          <span class="stock-chip" data-sym="NSE:HDFCBANK">HDFC BANK</span>
+          <span class="stock-chip" data-sym="NSE:ICICIBANK">ICICI BANK</span>
+          <span class="stock-chip" data-sym="NSE:WIPRO">WIPRO</span>
+          <span class="stock-chip" data-sym="NSE:SBIN">SBI</span>
+          <span class="stock-chip" data-sym="NSE:AXISBANK">AXIS BANK</span>
+          <span class="stock-chip" data-sym="NSE:KOTAKBANK">KOTAK BANK</span>
+          <span class="stock-chip" data-sym="NSE:LT">L&amp;T</span>
+          <span class="stock-chip" data-sym="NSE:MARUTI">MARUTI</span>
+          <span class="stock-chip" data-sym="NSE:BAJFINANCE">BAJAJ FIN</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="mkt-disclaimer">
+    <p>📌 Data powered by <strong>TradingView</strong>. This page is for informational purposes only and does not constitute investment advice. Market data may be delayed.</p>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="nav-logo">RK<span class="dot">.</span></span>
+      <p>Crafted with ⚡ by Rajeev Kumar · Salesforce Support Engineer</p>
+      <p class="footer-sub">© 2026 rajeev.dev · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="market.js"></script>
+</body>
+</html>

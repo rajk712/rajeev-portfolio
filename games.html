@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games — Rajeev Kumar</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">RK<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li>
+        <li><a href="games.html" class="nav-active">Games</a></li>
+        <li><a href="market.html">📊 Market</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="hero-bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="page-hero-content">
+      <span class="section-tag">Just for Fun</span>
+      <h1 class="page-hero-title">Rajeev's <span class="gradient-text">Game Zone</span></h1>
+      <p class="page-hero-sub">Engineers stay sharp by staying playful. Pick a game.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="game-tabs">
+        <button class="gtab active" data-game="rps">✊ Rock Paper Scissors</button>
+        <button class="gtab" data-game="puzzle">🧩 Slide Puzzle</button>
+        <button class="gtab" data-game="memory">🃏 Memory Match</button>
+        <button class="gtab" data-game="snake">🐍 Snake</button>
+      </div>
+
+      <!-- RPS -->
+      <div id="game-rps" class="game-panel active glass-card">
+        <h3>Rock · Paper · Scissors</h3>
+        <p class="game-sub">First to 5 wins the match!</p>
+        <div class="rps-board">
+          <div class="rps-player">
+            <div class="rps-avatar" id="rps-you-avatar">❓</div>
+            <span>You</span>
+            <span class="rps-score" id="rps-you-score">0</span>
+          </div>
+          <div class="rps-vs">VS</div>
+          <div class="rps-player">
+            <div class="rps-avatar" id="rps-cpu-avatar">❓</div>
+            <span>Computer</span>
+            <span class="rps-score" id="rps-cpu-score">0</span>
+          </div>
+        </div>
+        <div class="rps-choices">
+          <button class="rps-btn" onclick="playRPS('rock')">✊<span>Rock</span></button>
+          <button class="rps-btn" onclick="playRPS('paper')">📄<span>Paper</span></button>
+          <button class="rps-btn" onclick="playRPS('scissors')">✂️<span>Scissors</span></button>
+        </div>
+        <p class="rps-result" id="rps-result">Choose your move to begin!</p>
+        <button class="btn btn-outline" onclick="resetRPS()" style="margin-top:12px">Reset</button>
+      </div>
+
+      <!-- PUZZLE -->
+      <div id="game-puzzle" class="game-panel glass-card">
+        <h3>Slide Puzzle</h3>
+        <p class="game-sub">Arrange 1–8 in order. Moves: <b id="puzzle-moves">0</b></p>
+        <div class="puzzle-grid" id="puzzle-grid"></div>
+        <div style="text-align:center;margin-top:16px">
+          <button class="btn btn-primary" onclick="shufflePuzzle()">Shuffle</button>
+          <p id="puzzle-msg" style="margin-top:10px;font-weight:600;color:#00e5b0"></p>
+        </div>
+      </div>
+
+      <!-- MEMORY -->
+      <div id="game-memory" class="game-panel glass-card">
+        <h3>Memory Match</h3>
+        <p class="game-sub">Match all pairs. Flips: <b id="mem-flips">0</b> | Pairs: <b id="mem-pairs">0</b>/8</p>
+        <div class="memory-grid" id="memory-grid"></div>
+        <div style="text-align:center;margin-top:16px">
+          <button class="btn btn-primary" onclick="initMemory()">New Game</button>
+          <p id="mem-msg" style="margin-top:10px;font-weight:600;color:#00e5b0"></p>
+        </div>
+      </div>
+
+      <!-- SNAKE -->
+      <div id="game-snake" class="game-panel glass-card">
+        <h3>Snake</h3>
+        <p class="game-sub">Arrow keys to move. Score: <b id="snake-score">0</b></p>
+        <canvas id="snake-canvas" width="400" height="400"></canvas>
+        <div style="text-align:center;margin-top:16px">
+          <button class="btn btn-primary" onclick="startSnake()">Start / Restart</button>
+          <p class="game-sub" style="margin-top:8px">Use arrow keys or WASD</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="nav-logo">RK<span class="dot">.</span></span>
+      <p>Crafted with ⚡ by Rajeev Kumar · Salesforce Support Engineer</p>
+      <p class="footer-sub">© 2026 rajeev.dev · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="games.js"></script>
+</body>
+</html>

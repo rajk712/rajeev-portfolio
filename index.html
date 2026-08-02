@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rajeev Kumar | Salesforce Support Engineer</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">RK<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="market.html">📊 Market</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Available for collaboration
+      </div>
+      <h1 class="hero-title">
+        Hi, I'm <span class="gradient-text">Rajeev Kumar</span>
+      </h1>
+      <div class="typewriter-wrap">
+        <span class="typewriter" id="typewriter"></span><span class="cursor">|</span>
+      </div>
+      <p class="hero-desc">
+        Salesforce Support Engineer specializing in Agentforce, Data Cloud &amp; Einstein AI.
+        I bridge the gap between complex platform issues and clear customer solutions.
+      </p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="experience.html" class="btn btn-outline">View My Work</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Years at Salesforce</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">12</span><span class="stat-label">Certifications</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2000+</span><span class="stat-label">Cases Resolved</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <span class="avatar-emoji">⚡</span>
+        </div>
+        <svg class="orbit-ring" viewBox="0 0 300 300">
+          <circle cx="150" cy="150" r="130" fill="none" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="8 6"/>
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00a1e0"/>
+              <stop offset="100%" stop-color="#7c5cff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="orbit-icon oi1">☁️</div>
+        <div class="orbit-icon oi2">🤖</div>
+        <div class="orbit-icon oi3">🔍</div>
+        <div class="orbit-icon oi4">📊</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE NAV GRID -->
+  <div class="page-nav-section">
+    <div class="page-nav-grid">
+      <a href="about.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">👤</span>
+        <span class="pnc-label">About</span>
+      </a>
+      <a href="skills.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">🛠️</span>
+        <span class="pnc-label">Skills</span>
+      </a>
+      <a href="experience.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">💼</span>
+        <span class="pnc-label">Experience</span>
+      </a>
+      <a href="certifications.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">🏆</span>
+        <span class="pnc-label">Certs</span>
+      </a>
+      <a href="games.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">🎮</span>
+        <span class="pnc-label">Games</span>
+      </a>
+      <a href="market.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">📊</span>
+        <span class="pnc-label">Market</span>
+      </a>
+      <a href="contact.html" class="page-nav-card glass-card">
+        <span class="pnc-icon">📧</span>
+        <span class="pnc-label">Contact</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- CERT TICKER (inspired by stock market scrolling ticker) -->
+  <div class="ticker-wrap">
+    <div class="ticker-label">CERTIFIED</div>
+    <div class="ticker-track">
+      <div class="ticker-items" id="ticker-items">
+        <span class="ticker-item">🏆 Administrator</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🌟 Advanced Administrator</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🎧 Service Cloud Consultant</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">📈 Sales Cloud Consultant</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🌐 Experience Cloud Consultant</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">📊 Platform App Builder</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">⚡ Platform Developer I</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🔐 Sharing &amp; Visibility Architect</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🎓 Salesforce Associate</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🤖 AI Associate</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">🦾 Agentforce Specialist</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">☁️ Data Cloud Consultant</span>
+        <span class="ticker-sep">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH INDEX (stock market dashboard style) -->
+  <section id="tech-index">
+    <div class="ti-header">
+      <div class="ti-brand">
+        <span class="ti-bull">📊</span>
+        <span class="ti-title">RK Tech Index</span>
+      </div>
+      <div class="ti-status">
+        <span class="ti-dot ti-dot-green"></span>
+        <span class="ti-status-text">Profile Active</span>
+        <span class="ti-clock" id="ti-clock"></span>
+      </div>
+    </div>
+    <div class="ti-grid">
+      <div class="ti-card">
+        <div class="ti-card-label">AGENTFORCE</div>
+        <div class="ti-card-value">95.0</div>
+        <div class="ti-card-change ti-up">▲ +2.4%</div>
+        <div class="ti-card-sub">Expert Level</div>
+      </div>
+      <div class="ti-card">
+        <div class="ti-card-label">DATA CLOUD</div>
+        <div class="ti-card-value">90.0</div>
+        <div class="ti-card-change ti-up">▲ +1.8%</div>
+        <div class="ti-card-sub">Advanced</div>
+      </div>
+      <div class="ti-card">
+        <div class="ti-card-label">EINSTEIN AI</div>
+        <div class="ti-card-value">88.0</div>
+        <div class="ti-card-change ti-up">▲ +3.1%</div>
+        <div class="ti-card-sub">Advanced</div>
+      </div>
+      <div class="ti-card">
+        <div class="ti-card-label">APEX / LWC</div>
+        <div class="ti-card-value">87.0</div>
+        <div class="ti-card-change ti-up">▲ +0.9%</div>
+        <div class="ti-card-sub">Proficient</div>
+      </div>
+      <div class="ti-card">
+        <div class="ti-card-label">DEBUGGING</div>
+        <div class="ti-card-value">92.0</div>
+        <div class="ti-card-change ti-up">▲ +1.5%</div>
+        <div class="ti-card-sub">Expert Level</div>
+      </div>
+      <div class="ti-card">
+        <div class="ti-card-label">CERTS INDEX</div>
+        <div class="ti-card-value">12</div>
+        <div class="ti-card-change ti-up">▲ ALL ACTIVE</div>
+        <div class="ti-card-sub">Salesforce</div>
+      </div>
+    </div>
+    <div class="ti-footer-bar">
+      <span class="ti-footer-item">Cases Resolved: <strong>2,000+</strong></span>
+      <span class="ti-sep">|</span>
+      <span class="ti-footer-item">Experience: <strong>6 Yrs 5 Mo</strong></span>
+      <span class="ti-sep">|</span>
+      <span class="ti-footer-item">Location: <strong>Hyderabad, India</strong></span>
+      <span class="ti-sep">|</span>
+      <span class="ti-footer-item">Focus: <strong>Agentforce &amp; AI</strong></span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="nav-logo">RK<span class="dot">.</span></span>
+      <p>Crafted with ⚡ by Rajeev Kumar · Salesforce Support Engineer</p>
+      <p class="footer-sub">© 2026 rajeev.dev · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
