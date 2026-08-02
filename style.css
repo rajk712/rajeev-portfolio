@@ -71,11 +71,19 @@ body {
 .nav-logo {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--white);
+  background: linear-gradient(135deg, #00a1e0 0%, #7c5cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-decoration: none;
   letter-spacing: -0.5px;
 }
-.nav-logo .dot { color: var(--accent); }
+.nav-logo .dot {
+  background: linear-gradient(135deg, #00a1e0 0%, #7c5cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .nav-links {
   display: flex;
   list-style: none;
