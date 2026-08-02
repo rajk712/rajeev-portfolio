@@ -173,7 +173,7 @@ function analyze(apiKey, D) {
   fetch('https://rajeev-portfolio-topaz.vercel.app/api/analyze', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ apiKey: apiKey, prompt: prompt })
+    body: JSON.stringify({ apiKey: apiKey, prompt: prompt, gatewayUrl: D.gatewayUrl || null })
   }).then(function(r) {
     if (!r.ok) return r.json().then(function(e) { throw new Error(e.error || 'API error ' + r.status); });
     return r.json();

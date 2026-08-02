@@ -16,16 +16,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const { gatewayUrl } = req.body;
+    const baseUrl = gatewayUrl || 'https://api.openai.com/v1';
+
+    const response = await fetch(baseUrl + '/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey,
-        'HTTP-Referer': 'https://rajeev-portfolio-topaz.vercel.app',
-        'X-Title': 'SF Case Assistant'
+        'Authorization': 'Bearer ' + apiKey
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        model: 'gpt-4o-mini',
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }]
       })
