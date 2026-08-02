@@ -16,10 +16,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { gatewayUrl } = req.body;
-    const baseUrl = gatewayUrl || 'https://api.openai.com/v1';
-
-    const response = await fetch(baseUrl + '/chat/completions', {
+    const response = await fetch('https://models.inference.ai.azure.com/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
