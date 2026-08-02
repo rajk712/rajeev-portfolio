@@ -16,25 +16,27 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 1200 }
-        })
-      }
-    );
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey,
+        'HTTP-Referer': 'https://rajeev-portfolio-topaz.vercel.app',
+        'X-Title': 'SF Case Assistant'
+      },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
 
     const data = await response.json();
     if (!response.ok) {
       const msg = data.error ? data.error.message : 'API error';
       return res.status(response.status).json({ error: msg });
     }
-    const text = data.candidates[0].content.parts[0].text;
-    return res.status(200).json({ text });
+    return res.status(200).json({ text: data.choices[0].message.content });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Server error' });
   }
