@@ -16,24 +16,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 1200,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: 1200 }
+        })
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.error ? data.error.message : 'API error' });
+      const msg = data.error ? data.error.message : 'API error';
+      return res.status(response.status).json({ error: msg });
     }
-    return res.status(200).json({ text: data.choices[0].message.content });
+    const text = data.candidates[0].content.parts[0].text;
+    return res.status(200).json({ text });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Server error' });
   }
