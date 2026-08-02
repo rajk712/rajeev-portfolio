@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>SF Case Assistant</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:#070d1f;color:#e0e4f0;font-size:13px;min-height:100vh}
+.hdr{background:linear-gradient(135deg,#0f1e3d,#070d1f);padding:14px 18px;border-bottom:1px solid #1a2240;display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#00a1e0,#7c5cff);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ttl{font-size:15px;font-weight:800;background:linear-gradient(135deg,#00a1e0,#7c5cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:10px;color:#4a5580;margin-top:2px}
+.cbar{padding:8px 18px;background:#0c1428;border-bottom:1px solid #1a2240;font-size:11px;color:#6a7090}
+.cbar strong{color:#00a1e0}
+.tabs{display:flex;border-bottom:1px solid #1a2240}
+.tab{flex:1;padding:10px 4px;text-align:center;font-size:11px;font-weight:600;color:#4a5580;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.tab.on{color:#00a1e0;border-bottom-color:#00a1e0}
+.tab:hover{color:#c0c8e0}
+.tc{display:none;padding:14px 18px 18px}
+.tc.on{display:block}
+.srow{display:flex;align-items:center;gap:8px;font-size:11px;color:#6a7090;margin-bottom:12px;min-height:20px}
+.spin{width:13px;height:13px;border:2px solid #1a2240;border-top-color:#00a1e0;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+.lbl{font-size:10px;font-weight:700;color:#7c5cff;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.box{background:#0c1428;border:1px solid #1a2240;border-radius:9px;padding:11px 14px;font-size:12px;line-height:1.7;color:#c8d0e8;margin-bottom:12px;white-space:pre-wrap;word-break:break-word}
+.box.reply{border-color:#1a3a50;background:#091525;font-size:13px}
+.cpbtn{display:inline-block;padding:6px 14px;background:#0f1629;border:1px solid #1a2240;border-radius:7px;color:#00a1e0;font-size:11px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:background .15s}
+.cpbtn:hover{background:#1a2240}
+.cpbtn.ok{color:#00e0a0;border-color:#00e0a0}
+ul.ul{list-style:none}
+ul.ul li{display:flex;gap:8px;font-size:12px;color:#c8d0e8;line-height:1.55;margin-bottom:7px}
+.dot{color:#00a1e0;font-weight:700;flex-shrink:0}
+.bdg{display:inline-block;padding:2px 9px;border-radius:12px;font-size:10px;font-weight:700;margin:0 4px 5px 0}
+.bb{background:#0a2540;color:#00a1e0;border:1px solid #00a1e0}
+.bp{background:#1a0a40;color:#7c5cff;border:1px solid #7c5cff}
+.bg{background:#0a2520;color:#00c880;border:1px solid #00c880}
+.br{background:#2a0a10;color:#ff6070;border:1px solid #ff6070}
+.ebox{padding:10px 14px;background:#1e0810;border:1px solid #5a1020;border-radius:9px;font-size:12px;color:#e06070;margin-top:6px;display:none}
+hr.d{border:none;border-top:1px solid #1a2240;margin:9px 0}
+.ph{color:#3a4060;font-size:12px;padding:4px 0}
+#wait{padding:28px 18px;text-align:center;color:#4a5580;font-size:12px;line-height:1.8}
+#wait .wspin{width:24px;height:24px;border:3px solid #1a2240;border-top-color:#00a1e0;border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 14px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">⚡</div>
+  <div>
+    <div class="ttl">SF Case Assistant</div>
+    <div class="sub">AI reply drafts · Root cause · Fix steps</div>
+  </div>
+</div>
+
+<!-- Waiting for data -->
+<div id="wait">
+  <div class="wspin"></div>
+  Waiting for case data…<br/>
+  <span style="font-size:10px;color:#2a3050">Click the bookmark on a Salesforce case page</span>
+</div>
+
+<!-- Main UI (hidden until data arrives) -->
+<div id="app" style="display:none">
+  <div class="cbar" id="cb">Loading…</div>
+  <div class="tabs">
+    <div class="tab on" data-t="reply">✍️ Reply</div>
+    <div class="tab" data-t="analysis">🔍 Analysis</div>
+    <div class="tab" data-t="steps">🛠️ Fix Steps</div>
+  </div>
+  <div class="tc on" id="tc-reply">
+    <div class="srow"><div class="spin" id="sp"></div><span id="st">Analyzing case…</span></div>
+    <div class="ebox" id="eb"></div>
+    <div id="ro" style="display:none">
+      <div class="lbl">Draft Reply</div>
+      <div class="box reply" id="rt"></div>
+      <button class="cpbtn" id="cp">📋 Copy Reply</button>
+    </div>
+  </div>
+  <div class="tc" id="tc-analysis">
+    <div id="ao" style="display:none">
+      <div class="lbl">Root Cause</div><div class="box" id="rc"></div>
+      <div class="lbl">Errors Detected</div><div id="eb2" style="margin-bottom:10px"></div>
+      <div class="lbl">Confidence</div><div class="box" id="cf"></div>
+    </div>
+    <div class="ph" id="aph">Run analysis from the Reply tab first.</div>
+  </div>
+  <div class="tc" id="tc-steps">
+    <div id="so" style="display:none">
+      <div class="lbl">Recommended Fix Steps</div>
+      <ul class="ul" id="sl"></ul>
+      <hr class="d"/>
+      <div class="lbl">Related Areas</div>
+      <div id="rb"></div>
+    </div>
+    <div class="ph" id="sph">Run analysis from the Reply tab first.</div>
+  </div>
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(function(t) {
+  t.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(function(x) { x.classList.remove('on'); });
+    document.querySelectorAll('.tc').forEach(function(x) { x.classList.remove('on'); });
+    t.classList.add('on');
+    document.getElementById('tc-' + t.dataset.t).classList.add('on');
+  });
+});
+
+// Copy button
+document.getElementById('cp').addEventListener('click', function() {
+  navigator.clipboard.writeText(document.getElementById('rt').textContent).then(function() {
+    var b = document.getElementById('cp');
+    b.textContent = '✅ Copied!'; b.classList.add('ok');
+    setTimeout(function() { b.textContent = '📋 Copy Reply'; b.classList.remove('ok'); }, 2000);
+  });
+});
+
+function bdg(txt, cls) {
+  var s = document.createElement('span');
+  s.className = 'bdg ' + cls;
+  s.textContent = txt;
+  return s;
+}
+function addStep(txt) {
+  var li = document.createElement('li');
+  var d = document.createElement('span'); d.className = 'dot'; d.textContent = '▸';
+  var sp = document.createElement('span'); sp.textContent = txt;
+  li.appendChild(d); li.appendChild(sp);
+  document.getElementById('sl').appendChild(li);
+}
+function showErr(msg) {
+  document.getElementById('sp').style.display = 'none';
+  document.getElementById('st').textContent = 'Something went wrong';
+  var eb = document.getElementById('eb');
+  eb.textContent = msg; eb.style.display = 'block';
+}
+
+function analyze(apiKey, D) {
+  // Show app
+  document.getElementById('wait').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  // Case bar
+  var bar = document.getElementById('cb');
+  bar.textContent = '';
+  var s = document.createElement('strong');
+  s.textContent = D.caseNumber || 'Case';
+  bar.appendChild(s);
+  bar.appendChild(document.createTextNode(' — ' + (D.subject || 'No subject').slice(0, 55)));
+
+  var prompt = [
+    'You are an expert Salesforce Technical Support Engineer with 6+ years experience.',
+    'Analyze this case and respond in EXACTLY this JSON format (no extra text):',
+    '{"reply":"Professional reply. Start with Dear [Customer Name]. Sign off as Salesforce Technical Support Team.",',
+    '"rootCause":"1-2 sentences",',
+    '"errors":["err1"],',
+    '"confidence":"High/Medium/Low — reason",',
+    '"fixSteps":["Step 1: ...","Step 2: ...","Step 3: ...","Step 4: ..."],',
+    '"relatedAreas":["Area1","Area2","Area3"]}',
+    '',
+    'Case Number: ' + (D.caseNumber || 'Unknown'),
+    'Subject: ' + (D.subject || 'Unknown'),
+    'Status: ' + (D.status || 'Unknown'),
+    'Priority: ' + (D.priority || 'Unknown'),
+    'Customer: ' + (D.customerName || 'Unknown'),
+    'Description: ' + (D.description || 'N/A'),
+    'Latest Comment: ' + (D.latestComment || 'None'),
+    'Errors: ' + ((D.errorMessages || []).join(', ') || 'None'),
+    'Fields:\n' + (D.fieldContext || 'N/A')
+  ].join('\n');
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1200,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  }).then(function(r) {
+    if (!r.ok) return r.json().then(function(e) { throw new Error(e.error ? e.error.message : 'API error ' + r.status); });
+    return r.json();
+  }).then(function(data) {
+    var raw = data.content[0].text;
+    var result;
+    try {
+      var m = raw.match(/\{[\s\S]*\}/);
+      result = JSON.parse(m ? m[0] : raw);
+    } catch(e) { throw new Error('Could not parse AI response. Please try again.'); }
+
+    document.getElementById('sp').style.display = 'none';
+    document.getElementById('st').textContent = 'Analysis complete!';
+
+    document.getElementById('rt').textContent = result.reply || '';
+    document.getElementById('ro').style.display = 'block';
+
+    document.getElementById('rc').textContent = result.rootCause || '';
+    var eb2 = document.getElementById('eb2');
+    var errs = result.errors || D.errorMessages || [];
+    if (errs.length) errs.slice(0, 5).forEach(function(e) { eb2.appendChild(bdg(e, 'br')); });
+    else eb2.appendChild(bdg('No errors detected', 'bb'));
+    document.getElementById('cf').textContent = result.confidence || 'Medium';
+    document.getElementById('ao').style.display = 'block';
+    document.getElementById('aph').style.display = 'none';
+
+    (result.fixSteps || []).forEach(function(s) { addStep(s); });
+    var rb = document.getElementById('rb');
+    var cols = ['bb', 'bp', 'bg'];
+    (result.relatedAreas || []).forEach(function(r, i) { rb.appendChild(bdg(r, cols[i % 3])); });
+    document.getElementById('so').style.display = 'block';
+    document.getElementById('sph').style.display = 'none';
+
+  }).catch(function(err) {
+    showErr(err.message || 'Unknown error. Check your API key and try again.');
+  });
+}
+
+// Tell opener we are ready, then wait for data via postMessage
+if (window.opener) {
+  window.opener.postMessage({ type: 'SFCA_READY' }, '*');
+}
+
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'SFCA_DATA') {
+    analyze(e.data.apiKey, e.data.caseData);
+  }
+});
+</script>
+</body>
+</html>
