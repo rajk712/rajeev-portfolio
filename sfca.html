@@ -170,15 +170,13 @@ function analyze(apiKey, D) {
     'Fields:\n' + (D.fieldContext || 'N/A')
   ].join('\n');
 
-  fetch('https://rajeev-portfolio-topaz.vercel.app/api/analyze', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt: prompt })
-  }).then(function(r) {
-    if (!r.ok) return r.json().then(function(e) { throw new Error(e.error || 'API error ' + r.status); });
-    return r.json();
+  var polUrl = 'https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=42&nologo=true';
+  fetch(polUrl, { method: 'GET' })
+  .then(function(r) {
+    if (!r.ok) return r.text().then(function(t) { throw new Error(t || 'API error ' + r.status); });
+    return r.text();
   }).then(function(data) {
-    var raw = data.text;
+    var raw = data;
     var result;
     try {
       var m = raw.match(/\{[\s\S]*\}/);
