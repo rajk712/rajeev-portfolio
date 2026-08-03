@@ -16,15 +16,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://text.pollinations.ai/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'openai',
-        messages: [{ role: 'user', content: prompt }],
-        seed: 42
-      })
-    });
+    const url = 'https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=42';
+    const response = await fetch(url, { method: 'GET' });
 
     if (!response.ok) {
       const txt = await response.text();
