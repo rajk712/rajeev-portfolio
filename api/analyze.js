@@ -10,20 +10,25 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { prompt } = req.body;
-  if (!prompt) {
-    return res.status(400).json({ error: 'Missing prompt' });
+  const { apiKey, prompt } = req.body;
+  if (!apiKey || !prompt) {
+    return res.status(400).json({ error: 'Missing apiKey or prompt' });
   }
 
   try {
-    const url = 'https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai&seed=42';
-    const response = await fetch(url, { method: 'GET' });
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key=' + apiKey;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
+    });
 
+    const data = await response.json();
     if (!response.ok) {
-      const txt = await response.text();
-      return res.status(response.status).json({ error: txt || 'API error' });
+      const msg = (data.error && data.error.message) ? data.error.message : 'API error';
+      return res.status(response.status).json({ error: msg });
     }
-    const text = await response.text();
+    const text = data.candidates[0].content.parts[0].text;
     return res.status(200).json({ text });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Server error' });
