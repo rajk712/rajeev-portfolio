@@ -16,20 +16,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://text.pollinations.ai/openai', {
+    const response = await fetch('https://text.pollinations.ai/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'openai',
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: prompt }],
+        seed: 42
       })
     });
 
-    const data = await response.json();
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.error || 'API error' });
+      const txt = await response.text();
+      return res.status(response.status).json({ error: txt || 'API error' });
     }
-    return res.status(200).json({ text: data.choices[0].message.content });
+    const text = await response.text();
+    return res.status(200).json({ text });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Server error' });
   }
