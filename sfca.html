@@ -173,7 +173,7 @@ function analyze(apiKey, D) {
   fetch('https://rajeev-portfolio-topaz.vercel.app/api/analyze', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ apiKey: apiKey, prompt: prompt, gatewayUrl: D.gatewayUrl || null })
+    body: JSON.stringify({ prompt: prompt })
   }).then(function(r) {
     if (!r.ok) return r.json().then(function(e) { throw new Error(e.error || 'API error ' + r.status); });
     return r.json();
@@ -219,7 +219,7 @@ if (window.opener) {
 
 window.addEventListener('message', function(e) {
   if (e.data && e.data.type === 'SFCA_DATA') {
-    analyze(e.data.apiKey, e.data.caseData);
+    analyze(null, e.data.caseData);
   }
 });
 </script>
