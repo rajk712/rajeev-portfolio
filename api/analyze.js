@@ -16,20 +16,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key=' + apiKey;
-    const response = await fetch(url, {
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({
+        model: 'mistral-small-latest',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
 
     const data = await response.json();
     if (!response.ok) {
-      const msg = (data.error && data.error.message) ? data.error.message : 'API error';
+      const msg = (data.message) ? data.message : 'API error';
       return res.status(response.status).json({ error: msg });
     }
-    const text = data.candidates[0].content.parts[0].text;
-    return res.status(200).json({ text });
+    return res.status(200).json({ text: data.choices[0].message.content });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Server error' });
   }
