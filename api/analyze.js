@@ -16,14 +16,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+    const response = await fetch('https://api-inference.huggingface.co/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + apiKey
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'mistralai/Mistral-7B-Instruct-v0.3',
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     if (!response.ok) {
-      const msg = data.error ? data.error.message : 'API error';
+      const msg = data.error ? (typeof data.error === 'string' ? data.error : data.error.message) : 'API error';
       return res.status(response.status).json({ error: msg });
     }
     return res.status(200).json({ text: data.choices[0].message.content });
