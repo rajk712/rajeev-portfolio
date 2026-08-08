@@ -20,6 +20,7 @@
         <li><a href="certifications.html" class="nav-active">Certs</a></li>
         <li><a href="games.html">Games</a></li>
         <li><a href="market.html">📊 Market</a></li>
+        <li><a href="status.html">🟢 SF Status</a></li>
         <li><a href="contact.html" class="nav-cta">Contact</a></li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -66,7 +67,177 @@
         </div>
       </div>
 
-      <div class="certs-grid" style="margin-top:48px">
+      <!-- View toggle -->
+      <div class="cert-view-toggle" style="margin-top:40px">
+        <button class="cert-view-btn active" data-view="timeline">🕐 Timeline</button>
+        <button class="cert-view-btn" data-view="grid">⊞ Grid</button>
+      </div>
+
+      <!-- TIMELINE VIEW -->
+      <div id="cert-timeline" class="cert-timeline-wrap" style="margin-top:40px">
+        <div class="ct-line"></div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#ffd700,#ff9800)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🏆</div>
+            <div class="ct-body">
+              <span class="ct-tag admin">Admin</span>
+              <h4>Salesforce Certified Administrator</h4>
+              <p class="ct-year">2019</p>
+              <p class="ct-desc">Foundation of the Salesforce platform — users, security, automation, and data management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="right">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#c0c0c0,#808080)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🌟</div>
+            <div class="ct-body">
+              <span class="ct-tag admin">Admin</span>
+              <h4>Salesforce Certified Advanced Administrator</h4>
+              <p class="ct-year">2020</p>
+              <p class="ct-desc">Advanced configuration, automation strategies, and complex data management patterns.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#4CAF50,#2e7d32)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🎓</div>
+            <div class="ct-body">
+              <span class="ct-tag associate">Associate</span>
+              <h4>Salesforce Certified Associate</h4>
+              <p class="ct-year">2020</p>
+              <p class="ct-desc">Core Salesforce concepts, ecosystem fundamentals, and CRM basics.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="right">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#00a1e0,#0070d2)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🎧</div>
+            <div class="ct-body">
+              <span class="ct-tag consultant">Consultant</span>
+              <h4>Salesforce Certified Service Cloud Consultant</h4>
+              <p class="ct-year">2020</p>
+              <p class="ct-desc">Service Cloud implementation — cases, entitlements, omni-channel, and knowledge management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#ff7043,#e64a19)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">📈</div>
+            <div class="ct-body">
+              <span class="ct-tag consultant">Consultant</span>
+              <h4>Salesforce Certified Sales Cloud Consultant</h4>
+              <p class="ct-year">2021</p>
+              <p class="ct-desc">Sales process design, pipeline management, CPQ concepts, and forecasting.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="right">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#7c5cff,#4527a0)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">📊</div>
+            <div class="ct-body">
+              <span class="ct-tag developer">Developer</span>
+              <h4>Salesforce Certified Platform App Builder</h4>
+              <p class="ct-year">2021</p>
+              <p class="ct-desc">Declarative app development — objects, validation rules, process automation, and AppExchange.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#00e5b0,#00897b)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">⚡</div>
+            <div class="ct-body">
+              <span class="ct-tag developer">Developer</span>
+              <h4>Salesforce Certified Platform Developer I</h4>
+              <p class="ct-year">2021</p>
+              <p class="ct-desc">Apex, Visualforce, Lightning components, governor limits, and integration patterns.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="right">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#26c6da,#00838f)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🌐</div>
+            <div class="ct-body">
+              <span class="ct-tag consultant">Consultant</span>
+              <h4>Salesforce Certified Experience Cloud Consultant</h4>
+              <p class="ct-year">2022</p>
+              <p class="ct-desc">Digital experience design, community portals, and external user access models.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#ef5350,#b71c1c)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🔐</div>
+            <div class="ct-body">
+              <span class="ct-tag architect">Architect</span>
+              <h4>Salesforce Certified Sharing and Visibility Architect</h4>
+              <p class="ct-year">2022</p>
+              <p class="ct-desc">Complex sharing models, OWD, role hierarchy, sharing rules, and multi-tenant security.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="right">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#ff80ab,#c51162)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">☁️</div>
+            <div class="ct-body">
+              <span class="ct-tag consultant">Consultant</span>
+              <h4>Salesforce Certified Data Cloud Consultant</h4>
+              <p class="ct-year">2024</p>
+              <p class="ct-desc">Unified customer profiles, data streams, identity resolution, and Data Cloud activations.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in" data-side="left">
+          <div class="ct-dot" style="background:linear-gradient(135deg,#7c5cff,#00a1e0)"></div>
+          <div class="ct-card glass-card">
+            <div class="ct-badge">🤖</div>
+            <div class="ct-body">
+              <span class="ct-tag ai">AI</span>
+              <h4>Salesforce Certified AI Associate</h4>
+              <p class="ct-year">2024</p>
+              <p class="ct-desc">Einstein AI fundamentals, responsible AI principles, and AI capabilities in Salesforce.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-item fade-in ct-latest" data-side="right">
+          <div class="ct-dot ct-dot-pulse" style="background:linear-gradient(135deg,#00e5b0,#7c5cff)"></div>
+          <div class="ct-card glass-card ct-card-highlight">
+            <div class="ct-latest-badge">Latest</div>
+            <div class="ct-badge">🦾</div>
+            <div class="ct-body">
+              <span class="ct-tag ai">AI &amp; Agentforce</span>
+              <h4>Salesforce Certified Agentforce Specialist</h4>
+              <p class="ct-year">2025</p>
+              <p class="ct-desc">Agentforce architecture, agent builder, topics, actions, and autonomous AI deployment.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GRID VIEW (hidden by default) -->
+      <div id="cert-grid" class="certs-grid" style="margin-top:40px;display:none">
         <div class="cert-card glass-card fade-in">
           <div class="cert-badge">🏆</div>
           <div class="cert-info">
@@ -168,6 +339,18 @@
       </div>
     </div>
   </section>
+
+  <script>
+    document.querySelectorAll('.cert-view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cert-view-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.dataset.view;
+        document.getElementById('cert-timeline').style.display = view === 'timeline' ? 'block' : 'none';
+        document.getElementById('cert-grid').style.display = view === 'grid' ? 'grid' : 'none';
+      });
+    });
+  </script>
 
   <footer>
     <div class="footer-inner">

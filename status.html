@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SF Status — Rajeev Kumar</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">RK<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="market.html">📊 Market</a></li>
+        <li><a href="status.html" class="nav-active">🟢 SF Status</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="hero-bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="page-hero-content">
+      <span class="section-tag">Live</span>
+      <h1 class="page-hero-title">Salesforce <span class="gradient-text">System Status</span></h1>
+      <p class="page-hero-sub">Real-time status from trust.salesforce.com — incidents, maintenance, and service health at a glance.</p>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container sf-status-page">
+
+      <div id="sf-status-root">
+        <div class="sf-loading">
+          <div class="sf-loading-spinner"></div>
+          Fetching live status from trust.salesforce.com…
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:40px">
+        <a href="https://status.salesforce.com" target="_blank" rel="noopener" class="btn btn-outline">
+          View Full Status Page ↗
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="nav-logo">RK<span class="dot">.</span></span>
+      <p>Crafted with ⚡ by Rajeev Kumar · Salesforce Support Engineer</p>
+      <p class="footer-sub">© 2026 rajeev.dev · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+  (function() {
+    const root = document.getElementById('sf-status-root');
+
+    const INCIDENTS_URL  = 'https://api.status.salesforce.com/v1/incidents/active';
+    const MAINT_URL      = 'https://api.status.salesforce.com/v1/maintenances/active';
+    const INSTANCES_URL  = 'https://api.status.salesforce.com/v1/instances/status/preview?products=salesforce';
+
+    /* Try direct first, then two proxy fallbacks */
+    function fetchWithFallback(url) {
+      const timeout = ms => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms));
+
+      function tryDirect() {
+        return Promise.race([
+          fetch(url, { mode: 'cors' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+          timeout(5000)
+        ]);
+      }
+      function tryProxy(proxyFn, parseFn) {
+        return Promise.race([
+          fetch(proxyFn(url)).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(parseFn),
+          timeout(7000)
+        ]);
+      }
+
+      return tryDirect()
+        .catch(() => tryProxy(
+          u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+          d => d   /* corsproxy returns raw JSON */
+        ))
+        .catch(() => tryProxy(
+          u => 'https://api.allorigins.win/get?url=' + encodeURIComponent(u),
+          d => JSON.parse(d.contents)
+        ));
+    }
+
+    const PRODUCTS = [
+      { label: 'Core CRM',          icon: '🏢' },
+      { label: 'Service Cloud',      icon: '🎧' },
+      { label: 'Sales Cloud',        icon: '📈' },
+      { label: 'Marketing Cloud',    icon: '📣' },
+      { label: 'Experience Cloud',   icon: '🌐' },
+      { label: 'Data Cloud',         icon: '☁️' },
+      { label: 'Agentforce',         icon: '🤖' },
+      { label: 'Commerce Cloud',     icon: '🛒' },
+    ];
+
+    function cls(s) {
+      if (!s) return 'ok';
+      const l = s.toLowerCase();
+      if (l.includes('unavailable') || l.includes('major') || l.includes('outage')) return 'bad';
+      if (l.includes('degraded') || l.includes('performance') || l.includes('partial')) return 'warn';
+      return 'ok';
+    }
+
+    function relTime(d) {
+      if (!d) return '';
+      const m = Math.floor((Date.now() - new Date(d)) / 60000);
+      if (m < 2) return 'just now';
+      if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + 'h ago';
+      return Math.floor(h / 24) + 'd ago';
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function render(instances, incidents, maintenances) {
+      const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const inc = incidents || [], mnt = maintenances || [];
+      const all = [...inc, ...mnt];
+
+      const oc  = inc.length ? 'bad' : mnt.length ? 'warn' : 'ok';
+      const olabel = inc.length ? 'Active Incidents Detected' : mnt.length ? 'Scheduled Maintenance' : 'All Systems Operational';
+      const odesc  = inc.length
+        ? inc.length + ' active incident' + (inc.length > 1 ? 's' : '') + ' — check details below'
+        : mnt.length
+          ? mnt.length + ' maintenance window' + (mnt.length > 1 ? 's' : '') + ' in progress or upcoming'
+          : 'No active incidents or outages across all Salesforce services';
+
+      /* build product cards — try to match against instance data */
+      const cards = PRODUCTS.map(p => {
+        const match = (instances || []).find(i => {
+          const prods = (i.Products || []).map(x => x.toLowerCase()).join(' ');
+          const key = (i.key || '').toLowerCase();
+          const lbl = p.label.toLowerCase();
+          return prods.includes(lbl.split(' ')[0]) || key.includes(lbl.split(' ')[0]);
+        });
+        const status = match ? (match.status || 'Available') : 'Available';
+        const sc = match ? cls(status) : 'ok';
+        return `
+          <div class="sf-comp-card glass-card">
+            <span style="font-size:1.4rem">${p.icon}</span>
+            <div>
+              <div class="sf-comp-name">${p.label}</div>
+              <div class="sf-comp-dot-row"><span class="sf-comp-dot ${sc}"></span><span class="sf-comp-status">${esc(status)}</span></div>
+            </div>
+          </div>`;
+      }).join('');
+
+      /* incidents */
+      let incHTML = '';
+      if (!all.length) {
+        incHTML = `<div class="sf-no-incidents"><span class="sf-ok-icon">✅</span>No active incidents or scheduled maintenance right now. Everything looks good!</div>`;
+      } else {
+        incHTML += inc.map(i => `
+          <div class="sf-incident-card incident glass-card">
+            <div class="sf-incident-name">${esc(i.IncidentImpact || i.summary || 'Active Incident')}</div>
+            <div class="sf-incident-meta">${esc(i.IncidentNumber || '')}${i.IncidentNumber ? ' · ' : ''}Started ${relTime(i.createdAt || i.startTime)}</div>
+            <div class="sf-incident-body">${esc((i.statusHistory && i.statusHistory[0] && i.statusHistory[0].message) || i.message || '')}</div>
+          </div>`).join('');
+        incHTML += mnt.map(m => `
+          <div class="sf-incident-card maintenance glass-card">
+            <div class="sf-incident-name">${esc(m.name || m.summary || 'Scheduled Maintenance')}</div>
+            <div class="sf-incident-meta">${esc(m.MaintenanceNumber || '')}${m.MaintenanceNumber ? ' · ' : ''}${relTime(m.plannedStartTime || m.startTime)}</div>
+            <div class="sf-incident-body">${esc(m.message || m.description || '')}</div>
+          </div>`).join('');
+      }
+
+      root.innerHTML = `
+        <div class="sf-overall fade-in">
+          <div class="sf-overall-dot ${oc}"></div>
+          <div class="sf-overall-text">
+            <h3>${olabel}</h3>
+            <p>${odesc}</p>
+          </div>
+          <span class="sf-overall-updated">Updated ${now}</span>
+        </div>
+
+        <div class="sf-header-row">
+          <h3>Service Health</h3>
+          <button class="sf-refresh-btn" id="sf-refresh-btn">↻ Refresh</button>
+        </div>
+        <div class="sf-components-grid">${cards}</div>
+
+        <div class="sf-incidents-section">
+          <h3>Incidents &amp; Maintenance</h3>
+          ${incHTML}
+        </div>`;
+
+      document.getElementById('sf-refresh-btn').addEventListener('click', load);
+    }
+
+    function renderFallback() {
+      const isFile = window.location.protocol === 'file:';
+      const reason = isFile
+        ? 'You\'re opening this file directly (<code>file://</code>). Browsers block external API calls from local files — deploy the site to Vercel to get live data.'
+        : 'The Salesforce Status API could not be reached. Check your connection or try again.';
+
+      root.innerHTML = `
+        <div class="sf-offline-box glass-card fade-in" style="max-width:600px">
+          <div style="font-size:2rem;margin-bottom:12px">📡</div>
+          <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:10px">Live API unavailable</h3>
+          <p style="font-size:0.84rem;color:var(--muted);margin-bottom:22px;line-height:1.7">${reason}</p>
+          <a href="https://status.salesforce.com" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#00a1e0,#7c5cff);border-radius:10px;color:#fff;font-weight:700;font-size:0.88rem;text-decoration:none;margin-bottom:${isFile ? '0' : '16px'}">
+            🌐 Open trust.salesforce.com ↗
+          </a>
+          ${isFile ? '' : '<br><button class="sf-refresh-btn" id="sf-refresh-btn" style="margin:0 auto">↻ Try again</button>'}
+        </div>
+
+        <div class="sf-embed-section" style="margin-top:36px">
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:16px;text-align:center;color:var(--muted)">Salesforce Trust Status Page</h3>
+          <div style="border-radius:14px;overflow:hidden;border:1px solid var(--card-border)">
+            <iframe
+              src="https://status.salesforce.com"
+              width="100%"
+              height="520"
+              style="display:block;border:none;background:#fff"
+              title="Salesforce System Status"
+              loading="lazy">
+            </iframe>
+          </div>
+          <p style="font-size:0.75rem;color:var(--muted);text-align:center;margin-top:10px">Embedded from status.salesforce.com · <a href="https://status.salesforce.com" target="_blank" rel="noopener" style="color:var(--accent)">open in full tab ↗</a></p>
+        </div>`;
+
+      const retryBtn = document.getElementById('sf-refresh-btn');
+      if (retryBtn) retryBtn.addEventListener('click', load);
+    }
+
+    function load() {
+      /* On file:// the browser blocks all outbound fetch — skip straight to fallback */
+      if (window.location.protocol === 'file:') {
+        renderFallback();
+        return;
+      }
+
+      root.innerHTML = `<div class="sf-loading"><div class="sf-loading-spinner"></div>Fetching from trust.salesforce.com…</div>`;
+
+      const hard = ms => new Promise((_, rej) => setTimeout(() => rej(new Error('hard-timeout')), ms));
+
+      Promise.race([
+        Promise.all([
+          fetchWithFallback(INSTANCES_URL).catch(() => null),
+          fetchWithFallback(INCIDENTS_URL).catch(() => []),
+          fetchWithFallback(MAINT_URL).catch(() => [])
+        ]),
+        hard(12000)
+      ]).then(([inst, inc, mnt]) => {
+        if (!inst && !inc.length && !mnt.length) { renderFallback(); return; }
+        render(inst, inc, mnt);
+      }).catch(renderFallback);
+    }
+
+    load();
+    setInterval(load, 90000);
+  })();
+  </script>
+
+</body>
+</html>

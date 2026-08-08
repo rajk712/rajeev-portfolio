@@ -283,3 +283,4 @@ document.addEventListener('keydown', e => {
 });
 
 drawSnakeFrame();
+
