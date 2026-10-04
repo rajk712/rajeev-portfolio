@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Project — Rajeev Kumar</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">RK<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="certifications.html">Certs</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="market.html">📊 Market</a></li>
+        <li><a href="status.html">🟢 SF Status</a></li>
+        <li><a href="projects.html" class="nav-active">🚀 My Project</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="hero-bg">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="page-hero-content">
+      <span class="section-tag">What I've Built</span>
+      <h1 class="page-hero-title">My <span class="gradient-text">Project</span></h1>
+      <p class="page-hero-sub">Hands-on Agentforce tooling, built and tested on the Salesforce platform.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="timeline">
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card glass-card">
+            <div class="timeline-header">
+              <div>
+                <h3>Agent Test Kit</h3>
+                <p class="timeline-company">Regression testing for Agentforce agents · Salesforce unmanaged package</p>
+              </div>
+              <span class="timeline-date">2026</span>
+            </div>
+            <p class="section-sub" style="margin:0 0 16px">
+              Admins change topics, actions and instructions, and Salesforce ships three releases a year.
+              Agent Test Kit re-runs a suite of test conversations against a live agent and grades every reply,
+              so a regression shows up on a dashboard instead of in front of a customer.
+            </p>
+            <ul class="timeline-points">
+              <li>Sends each test message to the agent through the <code>generateAiAgentResponse</code> invocable action and records the reply and response time</li>
+              <li>Grades replies three ways: required keywords, forbidden keywords, and an LLM judge (Einstein Models API) that checks a plain-language expected behaviour</li>
+              <li>Built-in starter pack of 8 safety checks: prompt injection, persona hijack, data-leak requests, toxic input, off-topic and harmful requests, and human handoff</li>
+              <li>Runs as Batch Apex with one scenario per batch, so every agent call gets fresh governor limits; nightly runs via a Schedulable</li>
+              <li>Lightning Web Component dashboard to add scenarios, start runs and drill into failures, refreshing live while a run is in progress</li>
+              <li>9 Apex tests using fake agent and judge clients; packaged and installed in a separate org, where the starter pack passed 8 of 8 against a live service agent</li>
+            </ul>
+            <div class="timeline-tags">
+              <span>Agentforce</span><span>Apex</span><span>Batch Apex</span><span>LWC</span><span>Einstein Models API</span><span>Packaging</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-header" style="margin-top:80px">
+        <span class="section-tag">Under the Hood</span>
+        <h2 class="section-title">Agent Test Kit in Numbers</h2>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card glass-card fade-in">
+          <span class="impact-num gradient-text">8</span>
+          <span class="impact-label">Starter Safety Checks</span>
+        </div>
+        <div class="impact-card glass-card fade-in">
+          <span class="impact-num gradient-text">3</span>
+          <span class="impact-label">Grading Methods</span>
+        </div>
+        <div class="impact-card glass-card fade-in">
+          <span class="impact-num gradient-text">9</span>
+          <span class="impact-label">Apex Tests</span>
+        </div>
+        <div class="impact-card glass-card fade-in">
+          <span class="impact-num gradient-text">8/8</span>
+          <span class="impact-label">Live Run Pass Rate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="nav-logo">RK<span class="dot">.</span></span>
+      <p>Crafted with ⚡ by Rajeev Kumar · Salesforce Support Engineer</p>
+      <p class="footer-sub">© 2026 rajeev.dev · All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
